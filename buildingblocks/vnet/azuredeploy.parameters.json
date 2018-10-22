@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "nsgResourceGroup": {
+            "value": "NSGs"
+        },
+        "vnet": {
+            "value": {
+                "name": "prod",
+                "resourceGroup": "net-rg",
+                "addressPrefixes": [ "172.16.0.0/16" ],
+                "dnsServerAddresses": [ 
+                    "172.16.3.5",
+                    "172.16.3.6"
+                ],
+                "subnets": [
+                    { "name": "GatewaySubnet", "addressPrefix": "172.16.0.0/24", "nsg": "AllowRDP" },
+                    { "name": "web",       "addressPrefix": "172.16.1.0/24", "nsg": "AllowSSH" },
+                    { "name": "sql",       "addressPrefix": "172.16.2.0/24", "nsg": "AllowHTTPS" },
+                    { "name": "domain",       "addressPrefix": "172.16.3.0/24", "nsg": "AllowHTTPS" }
+                ]
+            }
+        }
+    }
+}
