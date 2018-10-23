@@ -1,0 +1,125 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "costCenterTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for CostCenter tag."
+            }
+        },
+        "resourceOwnerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for ResourceOwner tag."
+            }
+        },
+        "applicationName": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "myApp",
+            "metadata": {
+                "description": "Name for the application."
+            }
+        },
+        "lbNames": {
+            "type": "array",
+            "defaultValue": [
+                "web",
+                "app",
+                "sql"
+            ],
+            "metadata": {
+                "description": "Names for the load balancers."
+            }
+        }
+    },
+    "variables": {
+        "lbPublicIpName": "[concat(parameters('applicationName'), '-pip')]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('lbNames')[copyIndex()], '-pip')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "copy": {
+                "name": "publicIpCopy",
+                "count": "[length(parameters('lbNames'))]"
+            }
+        },
+        {
+            "name": "[concat(parameters('lbNames')[copyIndex()], '-lb')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
+            "dependsOn": [
+                "publicIpCopy"
+            ],
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontend",
+                        "properties": {
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('lbNames')[copyIndex()], '-pip'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "BackendPool"
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "lbprobe",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 80,
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "lbrule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', concat(parameters('lbNames')[copyIndex()], '-lb')), '/frontendIPConfigurations/LoadBalancerFrontend')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', concat(parameters('lbNames')[copyIndex()], '-lb')), '/backendAddressPools/BackendPool')]"
+                            },
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', concat(parameters('lbNames')[copyIndex()], '-lb')), '/probes/lbprobe')]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "idleTimeoutInMinutes": 15
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "loadBalancerCopy",
+                "count": "[length(parameters('lbNames'))]"
+            }
+        }
+    ],
+    "outputs": {}
+}
