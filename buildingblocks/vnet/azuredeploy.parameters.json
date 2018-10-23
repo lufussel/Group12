@@ -5,6 +5,12 @@
         "nsgResourceGroup": {
             "value": "NSGs"
         },
+        "costCenterTag": {
+            "value": "Finance"
+        },
+        "resourceOwnerTag": {
+            "value": "John Smith"
+        },
         "vnet": {
             "value": {
                 "name": "prod",

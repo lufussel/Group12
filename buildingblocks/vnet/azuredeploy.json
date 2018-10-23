@@ -9,6 +9,18 @@
                 "Description": "Network Security Group resources"
             }
         },
+        "costCenterTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for CostCenter tag."
+            }
+        },
+        "resourceOwnerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for ResourceOwner tag."
+            }
+        },
         "vnet": {
             "type": "object",
             "defaultValue": {
@@ -51,6 +63,10 @@
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": "[parameters('vnet').addressPrefixes]"
