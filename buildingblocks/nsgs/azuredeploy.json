@@ -23,48 +23,9 @@
                         }
                     },
                     {
-                        "name": "allow-netbios-name",
-                        "properties": {
-                            "priority": 1010,
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "protocol": "*",
-                            "destinationPortRange": "137",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    },
-                    {
-                        "name": "allow-netbios-datagram",
-                        "properties": {
-                            "priority": 1020,
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "protocol": "Udp",
-                            "destinationPortRange": "138",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    },
-                    {
-                        "name": "allow-netbios-session",
-                        "properties": {
-                            "priority": 1030,
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "protocol": "Tcp",
-                            "destinationPortRange": "139",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    },
-                    {
                         "name": "allow-smb-overip",
                         "properties": {
-                            "priority": 1040,
+                            "priority": 1010,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "*",
                             "destinationPortRange": "445",
@@ -77,7 +38,7 @@
                     {
                         "name": "allow-ldap",
                         "properties": {
-                            "priority": 1050,
+                            "priority": 1020,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "*",
                             "destinationPortRange": "389",
@@ -90,7 +51,7 @@
                     {
                         "name": "allow-ldap-overssl",
                         "properties": {
-                            "priority": 1060,
+                            "priority": 1030,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "Tcp",
                             "destinationPortRange": "636",
@@ -103,7 +64,7 @@
                     {
                         "name": "allow-gc-ldap",
                         "properties": {
-                            "priority": 1070,
+                            "priority": 1040,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "Tcp",
                             "destinationPortRange": "3268",
@@ -116,7 +77,7 @@
                     {
                         "name": "allow-gc-ldap-overssl",
                         "properties": {
-                            "priority": 1080,
+                            "priority": 1050,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "Tcp",
                             "destinationPortRange": "3269",
@@ -129,7 +90,7 @@
                     {
                         "name": "allow-kerberos",
                         "properties": {
-                            "priority": 1090,
+                            "priority": 1060,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "*",
                             "destinationPortRange": "88",
@@ -142,36 +103,10 @@
                     {
                         "name": "allow-dns",
                         "properties": {
-                            "priority": 1100,
+                            "priority": 1070,
                             "sourceAddressPrefix": "VirtualNetwork",
                             "protocol": "*",
                             "destinationPortRange": "53",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    },
-                    {
-                        "name": "allow-wins-resolution",
-                        "properties": {
-                            "priority": 1110,
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "protocol": "*",
-                            "destinationPortRange": "1512",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    },
-                    {
-                        "name": "allow-wins-replication",
-                        "properties": {
-                            "priority": 1120,
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "protocol": "*",
-                            "destinationPortRange": "42",
                             "access": "Allow",
                             "direction": "Inbound",
                             "sourcePortRange": "*",
