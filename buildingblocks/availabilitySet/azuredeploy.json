@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "costCenterTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for CostCenter tag."
+            }
+        },
+        "resourceOwnerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for ResourceOwner tag."
+            }
+        },
+        "asNames": {
+            "type": "array",
+            "defaultValue": [
+                "web",
+                "app",
+                "sql"
+            ],
+            "metadata": {
+                "description": "Names for the availability sets."
+            }
+        },
+        "numberOfFds": {
+            "type": "int",
+            "metadata": {
+                "description": "Number of fault domains"
+            },
+            "defaultValue": 2
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[concat(parameters('asNames')[copyIndex()], '-as')]",
+            "apiVersion": "2017-12-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
+            "properties": {
+                "platformFaultDomainCount": "[parameters('numberOfFds')]",
+                "platformUpdateDomainCount": 5
+            },
+            "sku": {
+                "name": "aligned"
+            },
+            "copy": {
+                "name": "availabilitySetCopy",
+                "count": "[length(parameters('asNames'))]"
+            }
+        }
+    ]
+}

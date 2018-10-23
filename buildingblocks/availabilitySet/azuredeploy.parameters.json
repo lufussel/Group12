@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "costCenterTag": {
+            "value": "Finance"
+        },
+        "resourceOwnerTag": {
+            "value": "John Smith"
+        },
+        "orgIDTag": {
+            "value": "PreSales"
+        },
+        "envTag": {
+            "value": "prod"
+        },
+        "asNames": {
+            "value": [
+                "web",
+                "app",
+                "sql"
+            ]
+        },
+        "numberOfFDs": {
+            "value": 2
+        }
+    }
+}
