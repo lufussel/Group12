@@ -24,7 +24,7 @@
             "value": "2012-R2-Datacenter"
         },
         "numberofVms": {
-            "value": 4
+            "value": 2
         },
         "vmSize": {
             "value": "small"
