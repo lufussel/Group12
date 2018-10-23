@@ -224,7 +224,7 @@
             "tags": {
                 "CostCenter": "[parameters('costCenterTag')]",
                 "ResourceOwner": "[parameters('resourceOwnerTag')]",
-                "RebootAtWeekend": "[parameters('shutdownAtWeekendTag')]",
+                "RebootAtWeekend": "[parameters('shutdownAtWeekendTag')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
