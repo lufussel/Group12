@@ -23,17 +23,17 @@
                     {
                         "name": "GatewaySubnet",
                         "addressPrefix": "172.16.0.0/24",
-                        "nsg": "AllowHTTPS"
+                        "nsg": "allow-rdp"
                     },
                     {
                         "name": "web",
                         "addressPrefix": "172.16.1.0/24",
-                        "nsg": "AllowHTTPS"
+                        "nsg": "allow-httphttps"
                     },
                     {
                         "name": "sql",
                         "addressPrefix": "172.16.2.0/24",
-                        "nsg": "AllowHTTPS"
+                        "nsg": "allow-sqlserver"
                     }
                 ]
             },

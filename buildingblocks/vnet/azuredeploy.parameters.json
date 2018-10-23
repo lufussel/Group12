@@ -15,10 +15,10 @@
                     "172.16.3.6"
                 ],
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "172.16.0.0/24", "nsg": "AllowRDP" },
-                    { "name": "web",       "addressPrefix": "172.16.1.0/24", "nsg": "AllowSSH" },
-                    { "name": "sql",       "addressPrefix": "172.16.2.0/24", "nsg": "AllowHTTPS" },
-                    { "name": "domain",       "addressPrefix": "172.16.3.0/24", "nsg": "AllowHTTPS" }
+                    { "name": "GatewaySubnet", "addressPrefix": "172.16.0.0/24", "nsg": "allow-rdp" },
+                    { "name": "web",       "addressPrefix": "172.16.1.0/24", "nsg": "allow-httphttps" },
+                    { "name": "sql",       "addressPrefix": "172.16.2.0/24", "nsg": "allow-sqlserver" },
+                    { "name": "domain",       "addressPrefix": "172.16.3.0/24", "nsg": "allow-domain" }
                 ]
             }
         }
