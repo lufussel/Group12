@@ -1,0 +1,35 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "globalCostCenterTag": {
+            "value": "Finance"
+        },
+        "globalResourceOwnerTag": {
+            "value": "John Smith"
+        },
+        "adminUsername": {
+            "value": "dmadmin"
+        },
+        "vmResourceGroup": {
+            "value": "infra-rg"
+        },
+        "vmPrefix": {
+            "value": "demo-"
+        },
+        "netResourceGroup": {
+            "value": "net-rg"
+        },
+        "vnet": {
+            "value": {
+                "name": "prod",
+                "subnets": [
+                    { "name": "web",            "numberofVms": 2,   "vmSize": "small" },
+                    { "name": "app",            "numberofVms": 2,   "vmSize": "small" },
+                    { "name": "sql",           "numberofVms": 1,   "vmSize": "small" },
+                    { "name": "domain",           "numberofVms": 2,   "vmSize": "small" }
+                ]
+            }
+        }
+    }
+}

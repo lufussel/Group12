@@ -1,0 +1,148 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "globalCostCenterTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for CostCenter tag."
+            }
+        },
+        "globalResourceOwnerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for ResourceOwner tag."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "dmadmin",
+            "metadata": {
+                "description": "User name for the Virtual Machine."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        },
+        "vmResourceGroup": {
+            "type": "string",
+            "defaultValue": "infra-rg",
+            "metadata": {
+                "description": "Resource Group for infrastructure resources"
+            }
+        },
+        "vmPrefix": {
+            "type": "string",
+            "defaultValue": "demo-",
+            "maxLength": 6,
+            "metadata": {
+                "description": "Prefix for virtual machine names"
+            }
+        },
+        "netResourceGroup": {
+            "type": "string",
+            "defaultValue": "net-rg",
+            "metadata": {
+                "description": "Resource Group for network resources"
+            }
+        },
+        "vnet": {
+            "type": "object",
+            "defaultValue": {
+                "name": "prod",
+                "resourceGroup": "[parameters('netResourceGroup')]",
+                "addressPrefixes": [
+                    "10.0.0.0/16"
+                ],
+                "subnets": [
+                    {
+                        "name": "web",
+                        "addressPrefix": "10.0.1.0/24",
+                        "numberofVms": 2,
+                        "vmSize": "small"
+                    },
+                    {
+                        "name": "app",
+                        "addressPrefix": "10.0.2.0/24",
+                        "numberofVms": 2,
+                        "vmSize": "small"
+                    },
+                    {
+                        "name": "sql",
+                        "addressPrefix": "10.0.3.0/24",
+                        "numberofVms": 1,
+                        "vmSize": "medium"
+                    },
+                    {
+                        "name": "domain",
+                        "addressPrefix": "10.0.4.0/24",
+                        "numberofVms": 1,
+                        "vmSize": "small"
+                    }
+                ]
+            },
+            "metadata": {
+                "description": "Core Virtual Network information"
+            }
+        }
+    },
+    "variables": {
+        "uridir": "https://raw.githubusercontent.com/lufussel/Group12/master/buildingblocks/",
+        "vmUri": "[concat(variables('uridir'), 'virtualMachine/azuredeploy.json')]"
+    },
+    "resources": [
+        {
+            "name": "[concat('coreVirtualNetwork-multiVms', copyIndex(1))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('vmResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "numberOfVms": {
+                        "value": "[parameters('vnet').subnets[copyIndex()].numberofVms]"
+                    },
+                    "vmPrefix": {
+                        "value": "[concat(parameters('vmPrefix'), parameters('vnet').subnets[copyIndex()].name)]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vnet').subnets[copyIndex()].vmSize]"
+                    },
+                    "vnetName": {
+                        "value": "[parameters('vnet').name]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('vnet').subnets[copyIndex()].name]"
+                    },
+                    "vnetResourceGroup": {
+                        "value": "[parameters('netResourceGroup')]"
+                    },
+                    "costCenterTag": {
+                        "value": "[parameters('globalCostCenterTag')]"
+                    },
+                    "resourceOwnerTag": {
+                        "value": "[parameters('globalResourceOwnerTag')]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[variables('vmUri')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            },
+            "copy": {
+                "name": "vmSubnetsCopy",
+                "count": "[length(parameters('vnet').subnets)]"
+            }
+        }
+    ],
+    "outputs": {}
+}
