@@ -12,7 +12,7 @@
         "costCenterTag": {
             "type": "string",
             "metadata": {
-                "description": "Value for CostCenter tag 2."
+                "description": "Value for CostCenter tag."
             }
         },
         "resourceOwnerTag": {
