@@ -8,12 +8,6 @@
         "resourceOwnerTag": {
             "value": "John Smith"
         },
-        "orgIDTag": {
-            "value": "PreSales"
-        },
-        "envTag": {
-            "value": "prod"
-        },
         "asNames": {
             "value": [
                 "web",
