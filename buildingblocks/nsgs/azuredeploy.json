@@ -1,12 +1,30 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters": {
+        "costCenterTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for CostCenter tag."
+            }
+        },
+        "resourceOwnerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Value for ResourceOwner tag."
+            }
+        }
+    },
     "resources": [
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-domain",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -121,6 +139,10 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-ssh",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -144,6 +166,10 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-https",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -167,6 +193,10 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-sqlserver",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -190,6 +220,10 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-httphttps",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -226,6 +260,10 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "allow-rdp",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "CostCenter": "[parameters('costCenterTag')]",
+                "ResourceOwner": "[parameters('resourceOwnerTag')]"
+            },
             "properties": {
                 "securityRules": [
                     {
