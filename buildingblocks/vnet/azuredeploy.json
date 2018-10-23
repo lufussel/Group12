@@ -43,9 +43,19 @@
                         "nsg": "allow-httphttps"
                     },
                     {
-                        "name": "sql",
+                        "name": "app",
                         "addressPrefix": "172.16.2.0/24",
+                        "nsg": "allow-httphttps"
+                    },
+                    {
+                        "name": "sql",
+                        "addressPrefix": "172.16.3.0/24",
                         "nsg": "allow-sqlserver"
+                    },
+                    {
+                        "name": "domain",
+                        "addressPrefix": "172.16.4.0/24",
+                        "nsg": "allow-domain"
                     }
                 ]
             },

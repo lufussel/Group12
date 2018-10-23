@@ -9,19 +9,23 @@
             "value": "John Smith"
         },
         "vmResourceGroup": {
-            "value": "infra-rg"
+            "value": "master-infra-rg"
         },
         "vnet": {
             "value": {
                 "name": "prod",
-                "resourceGroup": "net-rg",
+                "resourceGroup": "master-net-rg",
                 "addressPrefixes": [ "10.0.0.0/16" ],
+                "dnsServerAddresses": [ 
+                    "10.0.4.5",
+                    "10.0.4.6"
+                ],
                 "subnets": [
-                    { "name": "GatewaySubnet",  "addressPrefix": "10.0.0.0/24" },
-                    { "name": "web",            "addressPrefix": "10.0.1.0/24" },
-                    { "name": "app",            "addressPrefix": "10.0.2.0/24" },
-                    { "name": "sql",           "addressPrefix": "10.0.3.0/24" },
-                    { "name": "domain",           "addressPrefix": "10.0.4.0/24" }
+                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24", "nsg": "allow-rdp" },
+                    { "name": "web",           "addressPrefix": "10.0.1.0/24", "nsg": "allow-httphttps" },
+                    { "name": "app",           "addressPrefix": "10.0.2.0/24", "nsg": "allow-httphttps" },
+                    { "name": "sql",           "addressPrefix": "10.0.3.0/24", "nsg": "allow-sqlserver" },
+                    { "name": "domain",        "addressPrefix": "10.0.4.0/24", "nsg": "allow-domain" }
                 ]
             }
         }

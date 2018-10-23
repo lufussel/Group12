@@ -8,17 +8,20 @@
         "globalResourceOwnerTag": {
             "value": "John Smith"
         },
+        "globalShutdownAtWeekendTag": {
+            "value": "True"
+        },
         "adminUsername": {
             "value": "dmadmin"
         },
         "vmResourceGroup": {
-            "value": "infra-rg"
+            "value": "master-infra-rg"
         },
         "vmPrefix": {
             "value": "demo-"
         },
         "netResourceGroup": {
-            "value": "net-rg"
+            "value": "master-net-rg"
         },
         "vnet": {
             "value": {

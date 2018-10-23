@@ -16,7 +16,7 @@
         },
         "vmResourceGroup": {
             "type": "string",
-            "defaultValue": "infra-rg",
+            "defaultValue": "master-infra-rg",
             "metadata": {
                 "description": "Resource Group for infrastructure resources"
             }
@@ -25,30 +25,39 @@
             "type": "object",
             "defaultValue": {
                 "name": "prod",
-                "resourceGroup": "net-rg",
+                "resourceGroup": "master-net-rg",
                 "addressPrefixes": [
                     "10.0.0.0/16"
+                ],
+                "dnsServerAddresses": [ 
+                    "172.16.3.5",
+                    "172.16.3.6"
                 ],
                 "subnets": [
                     {
                         "name": "GatewaySubnet",
-                        "addressPrefix": "10.0.0.0/24"
+                        "addressPrefix": "10.0.0.0/24",
+                        "nsg": "allow-rdp"
                     },
                     {
                         "name": "web",
-                        "addressPrefix": "10.0.1.0/24"
+                        "addressPrefix": "10.0.1.0/24",
+                        "nsg": "allow-httphttps"
                     },
                     {
                         "name": "app",
-                        "addressPrefix": "10.0.2.0/24"
+                        "addressPrefix": "10.0.2.0/24",
+                        "nsg": "allow-httphttps"
                     },
                     {
                         "name": "sql",
-                        "addressPrefix": "10.0.3.0/24"
+                        "addressPrefix": "10.0.3.0/24",
+                        "nsg": "allow-sqlserver"
                     },
                     {
                         "name": "domain",
-                        "addressPrefix": "10.0.4.0/24"
+                        "addressPrefix": "10.0.4.0/24",
+                        "nsg": "allow-domain"
                     }
                 ]
             },
