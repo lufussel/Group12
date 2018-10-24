@@ -12,7 +12,7 @@
             "value": "True"
         },
         "vnetResourceGroup": {
-            "value": "lwp-eur-infra-rsg"
+            "value": "lwp-eur-net-rsg"
         },
         "adminUsername": {
             "value": "group12admin"
@@ -24,7 +24,7 @@
             "value": "2016-Datacenter"
         },
         "numberofVms": {
-            "value": 1
+            "value": 2
         },
         "vmSize": {
             "value": "small"

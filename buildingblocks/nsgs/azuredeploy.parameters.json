@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "costCenterTag": {
-            "value": "Finance"
+            "value": "Developers"
         },
         "resourceOwnerTag": {
-            "value": "John Smith"
+            "value": "David Bowie"
         }
     }
 }
