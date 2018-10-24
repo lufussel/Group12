@@ -30,7 +30,7 @@
             "value": "small"
         },
         "vmPrefix": {
-            "value": "lwp"
+            "value": "lwp-dc"
         },
         "vnetName": {
             "value": "lwp-vnt"
