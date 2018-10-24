@@ -9,23 +9,20 @@
             "value": "John Smith"
         },
         "vmResourceGroup": {
-            "value": "master-infra-rg"
+            "value": "lwp-infra-rsg"
         },
         "vnet": {
             "value": {
-                "name": "prod",
-                "resourceGroup": "master-net-rg",
-                "addressPrefixes": [ "10.0.0.0/16" ],
+                "name": "lwp-vnt",
+                "resourceGroup": "lwp-net-rsg",
+                "addressPrefixes": [ "192.168.0.0/20" ],
                 "dnsServerAddresses": [ 
-                    "10.0.4.5",
-                    "10.0.4.6"
+                    "10.1.0.10"
                 ],
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24", "nsg": "allow-rdp" },
-                    { "name": "web",           "addressPrefix": "10.0.1.0/24", "nsg": "allow-httphttps" },
-                    { "name": "app",           "addressPrefix": "10.0.2.0/24", "nsg": "allow-httphttps" },
-                    { "name": "sql",           "addressPrefix": "10.0.3.0/24", "nsg": "allow-sqlserver" },
-                    { "name": "domain",        "addressPrefix": "10.0.4.0/24", "nsg": "allow-domain" }
+                    { "name": "GatewaySubnet", "addressPrefix": "192.168.0.0/24", "nsg": "allow-rdp" },
+                    { "name": "dmz",           "addressPrefix": "192.168.1.0/24", "nsg": "allow-rdp" },
+                    { "name": "onprem",           "addressPrefix": "192.168.2.0/24", "nsg": "allow-rdp" }
                 ]
             }
         }

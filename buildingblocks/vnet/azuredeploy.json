@@ -4,7 +4,7 @@
     "parameters": {
         "nsgResourceGroup": {
             "type": "string",
-            "defaultValue": "nsgs-rg",
+            "defaultValue": "lwp-nsgs-rsg",
             "metadata": {
                 "Description": "Network Security Group resources"
             }
