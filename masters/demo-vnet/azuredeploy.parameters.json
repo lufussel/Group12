@@ -22,7 +22,8 @@
                 "subnets": [
                     { "name": "GatewaySubnet", "addressPrefix": "192.168.0.0/24", "nsg": "allow-rdp" },
                     { "name": "dmz",           "addressPrefix": "192.168.1.0/24", "nsg": "allow-rdp" },
-                    { "name": "onprem",           "addressPrefix": "192.168.2.0/24", "nsg": "allow-rdp" }
+                    { "name": "onprem",        "addressPrefix": "192.168.2.0/24", "nsg": "allow-rdp" },
+                    { "name": "domain",        "addressPrefix": "192.168.3.0/24", "nsg": "allow-domain" }
                 ]
             }
         }

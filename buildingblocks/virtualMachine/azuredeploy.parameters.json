@@ -9,28 +9,34 @@
             "value": "John Smith"
         },
         "shutdownAtWeekendTag": {
-            "value": "False"
+            "value": "True"
         },
         "vnetResourceGroup": {
-            "value": "net-rg"
+            "value": "lwp-infra-rsg"
         },
         "adminUsername": {
-            "value": "exampleadmin"
+            "value": "group12admin"
         },
         "osType": {
             "value": "windows"
         },
         "windowsOSVersion": {
-            "value": "2012-R2-Datacenter"
+            "value": "2016-Datacenter"
         },
         "numberofVms": {
-            "value": 2
+            "value": 1
         },
         "vmSize": {
             "value": "small"
         },
         "vmPrefix": {
-            "value": "demo"
+            "value": "lwp"
+        },
+        "vnetName": {
+            "value": "lwp-vnt"
+        },
+        "subnetName": {
+            "value": "domain"
         }
     }
 }
