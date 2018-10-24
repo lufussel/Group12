@@ -12,7 +12,7 @@
             "value": "True"
         },
         "vnetResourceGroup": {
-            "value": "lwp-infra-rsg"
+            "value": "lwp-eur-infra-rsg"
         },
         "adminUsername": {
             "value": "group12admin"
@@ -30,10 +30,10 @@
             "value": "small"
         },
         "vmPrefix": {
-            "value": "lwp-dc"
+            "value": "lwp-eur-dc"
         },
         "vnetName": {
-            "value": "lwp-vnt"
+            "value": "lwp-eur-vnt"
         },
         "subnetName": {
             "value": "domain"
