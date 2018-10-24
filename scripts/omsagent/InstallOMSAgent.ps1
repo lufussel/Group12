@@ -54,7 +54,7 @@ Set-Location $OMSFolder
  
 # Install the agent
 Write-Host "Installing Microsoft Monitoring Agent.." -nonewline
-$ArgumentList = '/C:"setup.exe /qn ADD_OPINSIGHTS_WORKSPACE=1 '+  "OPINSIGHTS_WORKSPACE_ID=10b3e49e-e30b-4d13-b550-49d3b3c56f53 " + "OPINSIGHTS_WORKSPACE_KEY=2WSeB8Te42GwyGa7ZS9RRbpxbisvmk1gDhjaohzHF+mMmU4zQu8P48HNt+PWSKkp22Ijzlc06T1xMXQ3TbIGvQ== " +'AcceptEndUserLicenseAgreement=1"'
+$ArgumentList = '/C:"setup.exe /qn ADD_OPINSIGHTS_WORKSPACE=1 '+  "OPINSIGHTS_WORKSPACE_ID=$WorkspaceID " + "OPINSIGHTS_WORKSPACE_KEY=$WorkSpaceKey " +'AcceptEndUserLicenseAgreement=1"'
 Start-Process $FileName -ArgumentList $ArgumentList -ErrorAction Stop -Wait | Out-Null
 Write-Host "done!" -ForegroundColor Green
 
