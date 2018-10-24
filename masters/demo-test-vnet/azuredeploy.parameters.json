@@ -1,0 +1,31 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "globalCostCenterTag": {
+            "value": "Finance"
+        },
+        "globalResourceOwnerTag": {
+            "value": "John Smith"
+        },
+        "vmResourceGroup": {
+            "value": "lwp-eur-infra-rsg"
+        },
+        "vnet": {
+            "value": {
+                "name": "lwp-eur-vnt",
+                "resourceGroup": "lwp-eur-net-rsg",
+                "addressPrefixes": [ "10.20.0.0/20" ],
+                "dnsServerAddresses": [ 
+                    "10.1.0.10"
+                ],
+                "subnets": [
+                    { "name": "GatewaySubnet", "addressPrefix": "10.20.0.0/24", "nsg": "allow-rdp" },
+                    { "name": "dmz",           "addressPrefix": "10.20.1.0/24", "nsg": "allow-rdp" },
+                    { "name": "onprem",        "addressPrefix": "10.20.2.0/24", "nsg": "allow-rdp" },
+                    { "name": "domain",        "addressPrefix": "10.20.3.0/24", "nsg": "allow-rdp" }
+                ]
+            }
+        }
+    }
+}
