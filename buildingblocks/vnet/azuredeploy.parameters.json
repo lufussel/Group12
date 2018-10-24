@@ -25,7 +25,12 @@
                     { "name": "web",       "addressPrefix": "172.16.1.0/24", "nsg": "allow-httphttps" },
                     { "name": "app",       "addressPrefix": "172.16.2.0/24", "nsg": "allow-httphttps" },
                     { "name": "sql",       "addressPrefix": "172.16.3.0/24", "nsg": "allow-sqlserver" },
-                    { "name": "domain",       "addressPrefix": "172.16.4.0/24", "nsg": "allow-domain" }
+                    { "name": "domain",       "addressPrefix": "172.16.4.0/24", "nsg": "allow-domain" },
+                    { "name": "domain2",       "addressPrefix": "172.16.5.0/24", "nsg": "allow-domain" },
+                    { "name": "domain3",       "addressPrefix": "172.16.6.0/24", "nsg": "allow-domain" },
+                    { "name": "domain4",       "addressPrefix": "172.16.7.0/24", "nsg": "allow-domain" },
+                    { "name": "domain5",       "addressPrefix": "172.16.8.0/24", "nsg": "allow-domain" }
+
                 ]
             }
         }
