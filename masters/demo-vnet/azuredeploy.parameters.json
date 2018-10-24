@@ -3,27 +3,27 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "globalCostCenterTag": {
-            "value": "Developers"
+            "value": "Finance"
         },
         "globalResourceOwnerTag": {
-            "value": "Jane Smith"
+            "value": "John Smith"
         },
         "vmResourceGroup": {
-            "value": "lwd-eur-infra-rsg"
+            "value": "lwp-eur-infra-rsg"
         },
         "vnet": {
             "value": {
-                "name": "lwd-eur-vnt",
-                "resourceGroup": "lwd-eur-net-rsg",
-                "addressPrefixes": [ "10.120.0.0/20" ],
+                "name": "lwp-eur-vnt",
+                "resourceGroup": "lwp-eur-net-rsg",
+                "addressPrefixes": [ "10.20.0.0/20" ],
                 "dnsServerAddresses": [ 
-                    "8.8.8.8"
+                    "10.1.0.10"
                 ],
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "10.120.0.0/24", "nsg": "allow-rdp" },
-                    { "name": "dmz",           "addressPrefix": "10.120.1.0/24", "nsg": "allow-rdp" },
-                    { "name": "onprem",        "addressPrefix": "10.120.2.0/24", "nsg": "allow-rdp" },
-                    { "name": "domain",        "addressPrefix": "10.120.3.0/24", "nsg": "allow-rdp" }
+                    { "name": "GatewaySubnet", "addressPrefix": "10.20.0.0/24", "nsg": "allow-rdp" },
+                    { "name": "dmz",           "addressPrefix": "10.20.1.0/24", "nsg": "allow-rdp" },
+                    { "name": "onprem",        "addressPrefix": "10.20.2.0/24", "nsg": "allow-rdp" },
+                    { "name": "domain",        "addressPrefix": "10.20.3.0/24", "nsg": "allow-rdp" }
                 ]
             }
         }
