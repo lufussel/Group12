@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "costCenterTag": {
+            "value": "Finance"
+        },
+        "resourceOwnerTag": {
+            "value": "John Smith"
+        },
+        "shutdownAtWeekendTag": {
+            "value": "True"
+        },
+        "vnetResourceGroup": {
+            "value": "lwp-eur-infra-rsg"
+        },
+        "adminUsername": {
+            "value": "group12admin"
+        },
+        "osType": {
+            "value": "windows"
+        },
+        "windowsOSVersion": {
+            "value": "2016-Datacenter"
+        },
+        "numberofVms": {
+            "value": 1
+        },
+        "vmSize": {
+            "value": "small"
+        },
+        "vmPrefix": {
+            "value": "lwp-eur-aip"
+        },
+        "vnetName": {
+            "value": "lwp-eur-vnt"
+        },
+        "subnetName": {
+            "value": "onprem"
+        }
+    }
+}
