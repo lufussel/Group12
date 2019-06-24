@@ -131,11 +131,11 @@
             "diskSize": 1023
         },
         "webVm": "[variables(concat(parameters('webServerSize'), 'Vm'))]",
-        "webVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "webVmName": "[concat(parameters('appShortname'), '-web-vm')]",
         "appVm": "[variables(concat(parameters('appServerSize'), 'Vm'))]",
-        "appVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "appVmName": "[concat(parameters('appShortname'), '-app-vm')]",
         "dataVm": "[variables(concat(parameters('dataServerSize'), 'Vm'))]",
-        "dataVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "dataVmName": "[concat(parameters('appShortname'), '-data-vm')]",
         "vnetID": "[resourceId(parameters('vnetResourceGroup'), 'Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
         "storageAccountType": "Standard_LRS",
         "storageAccountName": "[toLower(concat('bd', 'ply', uniquestring(resourceGroup().id)))]"
