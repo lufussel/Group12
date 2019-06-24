@@ -108,13 +108,12 @@
         }
     },
     "variables": {
-        "windowsImageReference": {
+        "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
             "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
         },
-        "imageReference": "windowsImageReference",
         "smallVm": {
             "size": "Standard_D1_v2",
             "numberOfDisks": 1,
