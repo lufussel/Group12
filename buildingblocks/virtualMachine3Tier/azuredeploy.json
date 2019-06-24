@@ -137,9 +137,8 @@
         "dataVm": "[variables(concat(parameters('dataServerSize'), 'Vm'))]",
         "dataVmName": "[concat(parameters('appShortname'), '-vm')]",
         "vnetID": "[resourceId(parameters('vnetResourceGroup'), 'Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
-        "AsubnetRef": "[concat(variables('vnetID'), '/subnets/', parameters('subnetName'))]",
         "storageAccountType": "Standard_LRS",
-        "storageAccountName": "[toLower(concat('bd', parameters('subnetName'), uniquestring(resourceGroup().id)))]"
+        "storageAccountName": "[toLower(concat('bd', 'ply', uniquestring(resourceGroup().id)))]"
     },
     "resources": [
         {
