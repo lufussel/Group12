@@ -1,0 +1,416 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appShortname": {
+            "type": "string",
+            "metadata": {
+                "description": "Name prefix for the VMs."
+            },
+            "defaultValue": "myapp"
+        },
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "prod",
+            "metadata": {
+                "description": "Name of the virtual network to deploy the VMs."
+            }
+        },
+        "vnetResourceGroup": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "Resource group containing the virtual network."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "User name for the Virtual Machine."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        },
+        "webServerQty": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Number of VMs per tier"
+            }
+        },
+        "webServerSize": {
+            "type": "string",
+            "defaultValue": "small",
+            "allowedValues": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "metadata": {
+                "description": "T-shirt size for the virtual machine"
+            }
+        },
+        "appServerQty": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Number of VMs per tier"
+            }
+        },
+        "appServerSize": {
+            "type": "string",
+            "defaultValue": "small",
+            "allowedValues": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "metadata": {
+                "description": "T-shirt size for the virtual machine"
+            }
+        },
+        "dataServerQty": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Number of VMs per tier"
+            }
+        },
+        "dataServerSize": {
+            "type": "string",
+            "defaultValue": "small",
+            "allowedValues": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "metadata": {
+                "description": "T-shirt size for the virtual machine"
+            }
+        },
+        "windowsOSVersion": {
+            "type": "string",
+            "defaultValue": "2019-Datacenter",
+            "allowedValues": [
+                "2019-Datacenter",
+                "2016-Datacenter",
+                "2012-R2-Datacenter",
+                "2012-Datacenter",
+                "2008-R2-SP1"
+            ],
+            "metadata": {
+                "description": "The Windows version for the VM. This will deploy a fully patched image of this given Windows version."
+            }
+        }
+    },
+    "variables": {
+        "windowsImageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "[parameters('windowsOSVersion')]",
+            "version": "latest"
+        },
+        "imageReference": "windowsImageReference",
+        "smallVm": {
+            "size": "Standard_D1_v2",
+            "numberOfDisks": 1,
+            "diskSize": 1023
+        },
+        "mediumVm": {
+            "size": "Standard_D2_v2",
+            "numberOfDisks": 1,
+            "diskSize": 1023
+        },
+        "largeVm": {
+            "size": "Standard_D4_v2",
+            "numberOfDisks": 1,
+            "diskSize": 1023
+        },
+        "webVm": "[variables(concat(parameters('webServerSize'), 'Vm'))]",
+        "webVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "appVm": "[variables(concat(parameters('appServerSize'), 'Vm'))]",
+        "appVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "dataVm": "[variables(concat(parameters('dataServerSize'), 'Vm'))]",
+        "dataVmName": "[concat(parameters('appShortname'), '-vm')]",
+        "vnetID": "[resourceId(parameters('vnetResourceGroup'), 'Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+        "AsubnetRef": "[concat(variables('vnetID'), '/subnets/', parameters('subnetName'))]",
+        "storageAccountType": "Standard_LRS",
+        "storageAccountName": "[toLower(concat('bd', parameters('subnetName'), uniquestring(resourceGroup().id)))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "sku": {
+                "name": "[variables('storageAccountType')]"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
+        {
+            "name": "[concat(variables('webVmName'), copyIndex(1), '-nic')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(variables('vnetID'), '/subnets/', 'web')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "webNicCopy",
+                "count": "[parameters('webServerQty')]"
+            }
+        },
+        {
+            "name": "[concat(variables('appVmName'), copyIndex(1), '-nic')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(variables('vnetID'), '/subnets/', 'app')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "appNicCopy",
+                "count": "[parameters('appServerQty')]"
+            }
+        },
+        {
+            "name": "[concat(variables('dataVmName'), copyIndex(1), '-nic')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(variables('vnetID'), '/subnets/', 'data')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "dataNicCopy",
+                "count": "[parameters('dataServerQty')]"
+            }
+        },
+        {
+            "name": "[concat(variables('webVmName'), copyIndex(1))]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+                "webNicCopy"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('webVm').size]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('webVmName'), copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "name": "[concat(variables('webVmName'), copyIndex(1), '-osDisk')]",
+                        "createOption": "FromImage"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[variables('webVm').numberOfDisks]",
+                            "input": {
+                                "name": "[concat(variables('webVmName'), copyIndex(1), '-dataDisk', padLeft(copyIndex('dataDisks'), 2, '0'))]",
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "diskSizeGB": "[variables('webVm').diskSize]"
+                            }
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('webVmName'),copyindex(1),'-nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "webVMCopy",
+                "count": "[parameters('webServerQty')]"
+            }
+        },
+        {
+            "name": "[concat(variables('appVmName'), copyIndex(1))]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+                "appNicCopy"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('appVm').size]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('appVmName'), copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "name": "[concat(variables('appVmName'), copyIndex(1), '-osDisk')]",
+                        "createOption": "FromImage"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[variables('appVm').numberOfDisks]",
+                            "input": {
+                                "name": "[concat(variables('appVmName'), copyIndex(1), '-dataDisk', padLeft(copyIndex('dataDisks'), 2, '0'))]",
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "diskSizeGB": "[variables('appVm').diskSize]"
+                            }
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('appVmName'),copyindex(1),'-nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "appVMCopy",
+                "count": "[parameters('appServerQty')]"
+            }
+        },
+        {
+            "name": "[concat(variables('dataVmName'), copyIndex(1))]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Application": "3 Tier Demo"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+                "dataNicCopy"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('dataVm').size]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('dataVmName'), copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "name": "[concat(variables('dataVmName'), copyIndex(1), '-osDisk')]",
+                        "createOption": "FromImage"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[variables('dataVm').numberOfDisks]",
+                            "input": {
+                                "name": "[concat(variables('dataVmName'), copyIndex(1), '-dataDisk', padLeft(copyIndex('dataDisks'), 2, '0'))]",
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "diskSizeGB": "[variables('dataVm').diskSize]"
+                            }
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('dataVmName'),copyindex(1),'-nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "dataVMCopy",
+                "count": "[parameters('dataServerQty')]"
+            }
+        }
+    ],
+    "outputs": {}
+}
